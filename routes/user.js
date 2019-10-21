@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
+require('../passport');
 
 signToken = user => {
   return jwt.sign({
      iss : 'limtae',
-     sub : user.id,
+     sub : user._id,
      iat : new Date().getTime(),
      exp : new Date().setDate(new Date().getTime() + 1)
   }, process.env.SECRET);
@@ -55,6 +57,16 @@ router.post('/login', async (req, res) => {
    res.json({
        msg : "work!"
    });
+});
+
+
+// @@ route GET user/secret
+// @@ desc  current user route
+// @@ access private
+router.get('/secret', passport.authenticate('jwt', {session : false}), (req, res) => {
+    res.json({
+        msg : "resource"
+    })
 });
 
 module.exports = router;
