@@ -1,5 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+
+signToken = user => {
+  return jwt.sign({
+     iss : 'limtae',
+     sub : user.id,
+     iat : new Date().getTime(),
+     exp : new Date().setDate(new Date().getTime() + 1)
+  }, process.env.SECRET);
+};
+
+
+
 
 const userModel = require('../models/user');
 
@@ -19,10 +32,14 @@ router.post('/signup', async (req, res) => {
    else{
        // user가 없다면
        const newUser = new userModel({ username, email, password});
+       const token = signToken(newUser);
        await newUser
            .save()
            .then(user => {
-               res.status(200).json(user);
+               res.status(200).json({
+                   userInfo : user,
+                   tokenInfo : 'bearer ' + token
+               });
            })
            .catch(err => res.json(err));
    }
