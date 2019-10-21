@@ -21,7 +21,15 @@ const userSchema = new mongoose.Schema({
     },
 
     facebook : {},
-    google : {},
+    google : {
+        id : {
+            type : String
+        },
+        email : {
+            type : String,
+            lowercase : true
+        }
+    },
 
     data : {
         type :Date,

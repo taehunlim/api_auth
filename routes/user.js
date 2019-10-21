@@ -7,7 +7,7 @@ require('../passport');
 signToken = user => {
   return jwt.sign({
      iss : 'limtae',
-     sub : user._id,
+     sub : user.id,
      iat : new Date().getTime(),
      exp : new Date().setDate(new Date().getTime() + 1)
   }, process.env.SECRET);
@@ -65,6 +65,18 @@ router.post('/login', passport.authenticate('local', {session : false}), async (
     const token = signToken(req.user);
     res.status(200).json({token});
 });
+
+
+// @@ route POST user/google
+// @@ desc  google login route
+// @@ access public
+router.post('/google', passport.authenticate('googleToken', {session : false}), (req, res) => {
+    const token = signToken(req.user);
+    res.status(200).json({
+        tokenInfo : token
+    });
+});
+
 
 
 // @@ route GET user/secret
