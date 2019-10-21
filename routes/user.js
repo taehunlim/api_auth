@@ -61,8 +61,9 @@ router.post('/signup', async (req, res) => {
 // @@ route POST user/login
 // @@ desc  user login route
 // @@ access public
-router.post('/login', async (req, res) => {
-   
+router.post('/login', passport.authenticate('local', {session : false}), async (req, res) => {
+    const token = signToken(req.user);
+    res.status(200).json({token});
 });
 
 
