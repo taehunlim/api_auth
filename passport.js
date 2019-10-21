@@ -36,6 +36,13 @@ passport.use(new localStrategy({
         return done(null, false);
     }
     //check password
+    const isMatch = await userModel.isValidPassword(password);
+    if(!isMatch) {
+        return done(null, false);
+    }
+    else {
+        done(null, user);
+    }
     //if not, handle
     //otherwise return the user
 }));

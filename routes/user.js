@@ -24,7 +24,7 @@ const userModel = require('../models/user');
 router.post('/signup', async (req, res) => {
    const {username, email, password} = req.body;
 
-   const foundUser = await userModel.findOne({email});
+   const foundUser = await userModel.findOne({"local.email": email});
    if(foundUser) {
     //user 가 잇다면
        return res.status(403).json({
@@ -33,7 +33,15 @@ router.post('/signup', async (req, res) => {
    }
    else{
        // user가 없다면
-       const newUser = new userModel({ username, email, password});
+       const newUser = new userModel({
+           method : 'local',
+           local : {
+               username : username,
+               email : email,
+               password : password
+
+           }
+       });
        const token = signToken(newUser);
        await newUser
            .save()
@@ -54,9 +62,7 @@ router.post('/signup', async (req, res) => {
 // @@ desc  user login route
 // @@ access public
 router.post('/login', async (req, res) => {
-   res.json({
-       msg : "work!"
-   });
+   
 });
 
 

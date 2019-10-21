@@ -10,10 +10,9 @@ const userRouter = require('./routes/user');
 
 mongoose
     .connect(process.env.MONGODB, {
-        useNewUrlParser : true,
-        useCreateIndex : true,
-        useUnifiedTopology : true,
-        useFindAndModify : true
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
     })
     .then(() => console.log("mongoDB connected"))
     .catch(err => console.log(err));
