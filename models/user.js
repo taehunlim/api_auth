@@ -15,12 +15,26 @@ const userSchema = new mongoose.Schema({
             type : String,
             lowercase : true //ㄷㅐ문자가 입력되 무조건 소문자도로 들어감
         },
+        avatar : {
+          type : String
+        },
         password : {
             type : String
         }
     },
 
-    facebook : {},
+    facebook : {
+        id : {
+            type : String
+        },
+        email : {
+            type : String,
+            lowercase : true
+        },
+        avatar : {
+            type : String
+        }
+    },
     google : {
         id : {
             type : String
@@ -28,6 +42,9 @@ const userSchema = new mongoose.Schema({
         email : {
             type : String,
             lowercase : true
+        },
+        avatar : {
+            type : String
         }
     },
 
